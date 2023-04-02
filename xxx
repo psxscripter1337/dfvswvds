@@ -1,0 +1,22 @@
+local lib = require(game:GetService("ReplicatedStorage").Framework.Library)
+
+function CollectLtbg()
+	for i, v in pairs(game:GetService("Workspace")["__THINGS"].Lootbags:GetChildren()) do	
+		local id = v:GetAttribute("ID")
+		local cframe = v.CFrame.p
+		lib.Network.Fire("Collect Lootbag", id, cframe)
+	end
+end
+
+function CollectOrbs()
+	local OrbTbl = {}
+	for i, v in pairs(game:GetService("Workspace")["__THINGS"].Orbs:GetChildren()) do	
+		table.insert(OrbTbl, v.Name)
+	end
+	if OrbTbl[1] == nil then
+		
+	else
+		lib.Network.Fire("Claim Orbs", OrbTbl)
+	end
+	return OrbTbl
+end
